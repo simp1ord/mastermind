@@ -4,6 +4,13 @@ require_relative 'gameplay.rb'
 require_relative 'player.rb' 
 
 class Game < GameDisplay 
+ attr_accessor :guess,
+               :computer_code,
+               :player_code,
+               :reguess_prevent,
+               :win_or_not,
+               :game_choice,
+               :computer_intelligence
   def initialize
     @@guess = []
     @@computer_code = []
@@ -12,6 +19,7 @@ class Game < GameDisplay
     @@win_or_not = []
     @@game_choice = []
   end
+
   def game_play (game, computer, player)
     game.game_begin
     game.game_choice(@@game_choice)
@@ -23,6 +31,12 @@ class Game < GameDisplay
       end
     elsif @@game_choice[0] == 'c'
       player.human_create(@@player_code)
+      12.times do
+        computer.computer_guess(@@player_code, @@computer_code, @@guess, @@reguess_prevent, @@win_or_not)
+        if @@win_or_not[0] == true
+          computer.xcomputer_win
+        end
+      end
     else
       puts "G/g or C/c input please, reload code!"
     end
